@@ -1,10 +1,11 @@
 # UI
+from functions import change_flights, show_flights
 from texttable import Texttable
 
 # Show help function: shows the menu options which an example for each option
 
 
-def show_help():
+def show_menu():
     table = Texttable(max_width=100)
     table.header(["Command", "Example"])
     table.set_cols_align(["l", "l"])
@@ -17,6 +18,8 @@ def show_help():
             ["modify <flight code> <duration>", "modify QF1000 240"],
             ["reroute <destination> <new destination>", "reroute Zurich Geneva"],
             ["show <departure>", "show Zurich"],
+            ["help", "Display the menu"],
+            ["exit", "Stop the application"],
         ],
         header=False,
     )
@@ -31,4 +34,24 @@ def show_help():
 
 
 def main():
-    show_help()
+    show_menu()
+
+    # Keeping the app running and calling the chosen functions
+    while True:
+        words = input("Enter a command: ").lower().split()
+        if len(words) == 0:
+            continue
+
+        try:
+            if words == ["exit"]:
+                return False
+            elif words == ["help"]:
+                show_menu()
+            elif words[0] == "show":
+                show_flights()
+            else:
+                change_flights()
+
+        except ValueError as error:
+            print("Error", error)
+
