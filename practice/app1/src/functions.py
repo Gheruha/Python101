@@ -40,8 +40,19 @@ def modify_flight(flights, flight_code, duration):
     raise ValueError("Flight code not found")
 
 
-def reroute_flight(words, flights):
-    print("reroute flight")
+def reroute_flight(flights, destination, new_destination):
+    if len(destination) < 3 or len(new_destination) < 3:
+        raise ValueError("Check the menu again, one of the values has a wrong value")
+
+    found = False
+    for flight in flights:
+        if flight["destination"] == destination:
+            flight["destination"] = new_destination
+            found = True
+    if not found:
+        raise ValueError("There is no " + destination + " destination.")
+
+    return flights
 
 
 def show_flights(words, flights):
@@ -55,5 +66,7 @@ def change_flights(words, flights):
         return add_flight(flights, words[1], words[2], words[3], words[4])
     elif command == "modify" and len(words) == 3:
         return modify_flight(flights, words[1], words[2])
+    elif command == "reroute":
+        return reroute_flight(flights, words[1], words[2])
 
     raise ValueError("Invalid command")

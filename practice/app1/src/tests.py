@@ -1,5 +1,5 @@
 from functions import (add_flight, change_flights, modify_flight,
-                       positive_integer)
+                       positive_integer, reroute_flight)
 
 
 def test_positive_integer():
@@ -38,3 +38,18 @@ def test_modify_flight():
 
     result = []
     print("Modify flights passed")
+
+
+def test_reroute_flight():
+    flights = []
+    flights = add_flight(flights, "qf1000", "180", "zurich", "rome")
+    flights = add_flight(flights, "qf1002", "180", "zurich", "rome")
+
+    result = []
+    result = reroute_flight(flights, "rome", "bucharest")
+    assert len(result) == 2
+    for res in result:
+        assert res["destination"] == "bucharest"
+
+    result = []
+    print("Reroute flights passed")
