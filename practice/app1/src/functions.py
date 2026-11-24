@@ -9,6 +9,16 @@ def positive_integer(text):
 
 
 def add_flight(flights, flight_code, duration, departure, destination):
+    duration = int(duration)
+
+    if (
+        len(flight_code) < 3
+        or duration < 20
+        or len(departure) < 3
+        or len(destination) < 3
+    ):
+        raise ValueError("Check the menu again, one of the values has a wrong value")
+
     new_flight = {
         "flight_code": flight_code,
         "duration": duration,
@@ -18,8 +28,16 @@ def add_flight(flights, flight_code, duration, departure, destination):
     return flights + [new_flight]
 
 
-def modify_flight(words, flights):
-    print("modify flight")
+def modify_flight(flights, flight_code, duration):
+    duration = int(duration)
+    if duration < 20:
+        raise ValueError("Check the menu again, one of the values has a wrong value")
+    else:
+        for flight in flights:
+            if flight["flight_code"] == flight_code:
+                flight["duration"] = duration
+            return flights
+    raise ValueError("Flight code not found")
 
 
 def reroute_flight(words, flights):
@@ -35,3 +53,7 @@ def change_flights(words, flights):
 
     if command == "add" and len(words) == 5:
         return add_flight(flights, words[1], words[2], words[3], words[4])
+    elif command == "modify" and len(words) == 3:
+        return modify_flight(flights, words[1], words[2])
+
+    raise ValueError("Invalid command")
