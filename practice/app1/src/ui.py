@@ -35,6 +35,7 @@ def show_menu():
 
 def main():
     show_menu()
+    flights = []
 
     # Keeping the app running and calling the chosen functions
     while True:
@@ -48,10 +49,10 @@ def main():
             elif words == ["help"]:
                 show_menu()
             elif words[0] == "show":
-                show_flights()
+                show_flights(words, flights)
             else:
-                change_flights()
+                flights = change_flights(words, flights)
+                print(flights)
 
         except ValueError as error:
             print("Error", error)
-
